@@ -8,9 +8,13 @@ public class Usuario {
     private String direccion;
     private String numero;
 
+     // Método para solicitar información del usuario desde la consola
     public void solicitarInformacion(Scanner scanner) {
+    //un medio para interactuar con el usuario y recopilar información de entrada desde la consola.
         System.out.print("Ingrese su nombre: ");
-        this.nombre = scanner.nextLine();
+        this.nombre = scanner.nextLine(); 
+        //se utiliza para capturar el nombre ingresado por el usuario desde la consola y 
+        //asignarlo a la propiedad nombre de la instancia actual de la clase
 
         System.out.print("Ingrese su apellido: ");
         this.apellido = scanner.nextLine();
@@ -22,5 +26,5 @@ public class Usuario {
         this.numero = scanner.nextLine();
     }
 
-    // Getters para acceder a la información del usuario
+  
 }
