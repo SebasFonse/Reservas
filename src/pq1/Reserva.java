@@ -7,9 +7,11 @@ public class Reserva {
     private String fechaReserva;
     private int duracionHoras;
     private String serviciosAdicionales;
-    private int total; 
-    
-     // Método para solicitar detalles de la reserva desde la consola
+    private int total;
+    private SalaSeleccionada sala;
+    private ServiciosAdicionales serviciosAdicionalesObj;
+
+    // Método para solicitar detalles de la reserva desde la consola
     public void solicitarDetalles(Scanner scanner) {
         System.out.println("\nDetalles de la reserva:");
         System.out.println("1. Sala Estandar - $100,000");
@@ -35,38 +37,52 @@ public class Reserva {
         scanner.nextLine();  // Consumir el salto de línea pendiente
         this.serviciosAdicionales = scanner.nextLine();
 
+        // Cambios para utilizar las nuevas clases
+        this.sala = obtenerSalaSeleccionada();
+        this.serviciosAdicionalesObj = obtenerServiciosAdicionales();
+
         // Calcular el total al solicitar los detalles
         this.total = calcularTotal();
     }
-    // Método para mostrar el recibo 
-    public void mostrarRecibo(Usuario usuario) {
-        
-    }
 
-    public int getTotal() {
-        return total;
-    }
-    // Método privado para calcular el total basado en las opciones seleccionadas
-    private int calcularTotal() {
+    // Método privado para obtener la sala seleccionada
+    private SalaSeleccionada obtenerSalaSeleccionada() {
         int costoSala = 0;
         switch (this.salaSeleccionada) {
             case 1 -> costoSala = 100000;
             case 2 -> costoSala = 200000;
             case 3 -> costoSala = 300000;
         }
-
-        int costoServicios = 0;
-        if (!this.serviciosAdicionales.equals("0")) {
-            String[] serviciosSeleccionados = this.serviciosAdicionales.split(",");
-            for (String servicio : serviciosSeleccionados) {
-                costoServicios += 50000;
-            }
-        }
-
-        return costoSala + costoServicios + (this.duracionHoras * 50000);  // Agregar costo por hora
+        return new SalaSeleccionada(this.salaSeleccionada, costoSala);
     }
 
-    // Resto de la clase
+    // Método privado para obtener los servicios adicionales
+    private ServiciosAdicionales obtenerServiciosAdicionales() {
+        String[] serviciosSeleccionados = this.serviciosAdicionales.equals("0") ?
+                new String[0] : this.serviciosAdicionales.split(",");
+        int costoServicios = serviciosSeleccionados.length * 50000;
+        return new ServiciosAdicionales(serviciosSeleccionados, costoServicios);
+    }
+
+    // Método para mostrar el recibo
+    public void mostrarRecibo(Usuario usuario) {
+        // Implementar la lógica para mostrar el recibo
+        System.out.println("Recibo:");
+        System.out.println("Fecha de reserva: " + this.fechaReserva);
+        System.out.println("Sala seleccionada: " + this.sala.getNumero());
+        System.out.println("Costo de la sala: $" + this.sala.getCosto());
+        System.out.println("Duración en horas: " + this.duracionHoras);
+        System.out.println("Servicios adicionales: " + String.join(", ", this.serviciosAdicionalesObj.getServicios()));
+        System.out.println("Costo de servicios adicionales: $" + this.serviciosAdicionalesObj.getCostoPorServicio());
+        System.out.println("Total a pagar: $" + this.total);
+        // Agregar más detalles según sea necesario
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    // Resto de la clase...
 
     int getSalaSeleccionada() {
         return salaSeleccionada;
@@ -83,4 +99,15 @@ public class Reserva {
     String getServiciosAdicionales() {
         return serviciosAdicionales;
     }
+
+    // Resto de la clase...
+
+    private int calcularTotal() {
+        // Calcular el total sumando el costo de la sala y el costo de los servicios adicionales
+        return this.sala.getCosto() + this.serviciosAdicionalesObj.getCostoPorServicio();
+    }
 }
+
+
+
+
