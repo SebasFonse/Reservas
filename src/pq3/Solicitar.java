@@ -1,4 +1,4 @@
-package pq1;
+package pq3;
 
 import pq1.Usuario;
 import pq1.Reserva;
@@ -27,13 +27,9 @@ public class Solicitar {
       
         scanner.close();
     }
-    
+
     private static void imprimirOpciones(Reserva reserva) {
-        System.out.println("\nOpciones seleccionadas:");
-        System.out.println("Sala seleccionada: " + reserva.getSalaSeleccionada());
-        System.out.println("Fecha de reserva: " + reserva.getFechaReserva());
-        System.out.println("Duración en horas: " + reserva.getDuracionHoras());
-        System.out.println("Servicios adicionales: " + reserva.getServiciosAdicionales());
-        System.out.println("Total a pagar: $" + reserva.getTotal());  // Obtener el total directamente
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 }
